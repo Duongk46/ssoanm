@@ -1,0 +1,61 @@
+﻿@model RegisterViewModel
+
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var listGender = (SelectList)ViewData["Gender"];
+}
+
+<div class="tab-content w-50" style="margin-top:100px;">
+    <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-register">
+        <h3 style="text-align: center">Đăng ký</h3>
+        <form asp-controller="Account" asp-action="Register" method="post">
+            <input type="hidden" asp-for="ReturnUrl" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-outline mb-4">
+                <label class="form-label" asp-for="Username">Tài khoản</label>
+                <input type="text" placeholder="Nhập tài khoản..." asp-for="Username" class="form-control" />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label" asp-for="Password">Mật khẩu</label>
+                <input type="password" placeholder="***" asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label" asp-for="ConfirmPassword">Nhập lại mật khẩu</label>
+                <input type="password" placeholder="***" asp-for="ConfirmPassword" class="form-control" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label" asp-for="Name">Họ và tên</label>
+                <input type="text" placeholder="Nhập họ và tên..." asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label" asp-for="BirthDay">Ngày sinh</label>
+                <input type="date" asp-for="BirthDay"class="form-control" />
+                <span asp-validation-for="BirthDay" class="text-danger"></span>
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label" asp-for="BirthDay">Giới tính</label>
+                <select asp-for="Gender" asp-items="listGender"></select>
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label" asp-for="Address">Địa chỉ</label>
+                <input type="text" placeholder="Nhập địa chỉ..." asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label" asp-for="Email">Email</label>
+                <input type="email" placeholder="Nhập email..." asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div>
+                <a asp-controller="Account" asp-action="Login" asp-route-returnurl="@Model.ReturnUrl" class="btn btn-outline-primary mt-3">Quay về đăng nhập</a>
+                <button type="submit" class="btn btn-success mt-3">Đăng ký</button>
+            </div>
+        </form>
+    </div>
+</div>

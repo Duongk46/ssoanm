@@ -1,0 +1,120 @@
+﻿@model IEnumerable<Entities.Entities.Product>
+@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Web.Common;
+@{
+    ViewData["Title"] = "Danh sách bài viết";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+    var paginations = (IPagedList)ViewData["Paginations"];
+    var listCategory = (IEnumerable<Entities.Entities.Category>)ViewData["ListCategory"];
+}
+@section js{
+    <script src="~/js/admin/Product.js"></script>
+}
+<div class="container-fluid">
+    <!-- DataTales Example -->
+    @if (Model != null)
+    {
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h4 class="m-0 font-weight-bold text-primary">@ViewBag.Title</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive text-nowrap table-borderless">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead class="table-info">
+                            <tr>
+                                <th>Tên bài viết</th>
+                                <th>Loại bài viết</th>
+                                <th>Hình ảnh</th>
+                                <th>Ngày tạo</th>
+                                <th>Trạng thái</th>
+                                <th>Công cụ</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-light table-border-bottom-0">
+                            @foreach (var item in Model)
+                            {
+                                var tick = "fa-solid fa-check color-tick";
+                                var xmask = "fa-solid fa-xmark color-xmask";
+                                <tr class="item-@item.ID">
+                                    <td>
+                                        @item.Name
+                                    </td>
+                                    <td>@listCategory.SingleOrDefault(x => x.ID == item.IDCategory).Name</td>
+                                    <td><img class="pic pic__size" src="/uploadFiles/@item.FileContent" /></td>
+                                    <td>@item.CreatedDate</td>
+                                    <td>
+                                        <span class="_EditStatus" data-bs-toggle="modal" data-bs-target="#editStatus" data-id=@item.ID><i class="@(item.Status == true ? tick : xmask)  _status-@item.ID"></i></span>
+                                    </td>
+                                    <td>
+                                        <a href="/Product/Edit/@item.ID" style="margin-right: 2px"><i class="fa-solid fa-pen color-edit"></i></a>
+                                        <span class="_deleteProduct" data-bs-toggle="modal" data-bs-target="#deleteProduct" data-id="@item.ID" style="cursor: pointer; margin-right: 2px"><i class="fa-solid fa-trash color-trash"></i></span>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @if (paginations != null)
+                {
+                    <div class="row mt-4" style="justify-content: space-between;">
+                        <div class="col-sm-12 col-md-5">
+                            <div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">Hiện @paginations.FirstItemOnPage đến @paginations.LastItemOnPage trong @paginations.TotalItemCount kết quả</div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
+
+                                @Html.PagedListPager(paginations, page => Url.Action("Product","",new {page=page}),new PagedListRenderOptions{
+                        DisplayLinkToIndividualPages = true,
+                        DisplayPageCountAndCurrentLocation = false,
+                        MaximumPageNumbersToDisplay  = 5,
+                        LiElementClasses = new string[] { "page-item" },
+                        PageClasses = new string[] { "page-link" },
+
+                        })
+
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>
+
+<div class="modal fade" id="deleteProduct" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Xóa bài viết ?</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Bạn có chắc là muốn xóa bài viết này?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Quay lại</button>
+                <button type="button" class="btn btn-primary btn-submit">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editStatus" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel1">Chỉnh sửa trạng thái ?</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Bạn có chắc là muốn chỉnh sửa trạng thái của bài viết này?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Quay lại</button>
+                <button type="button" class="btn btn-primary btn-submit-edit">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>

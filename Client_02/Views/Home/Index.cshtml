@@ -1,0 +1,94 @@
+﻿@model IEnumerable<Entities.Entities.Product>
+@{
+    ViewData["Title"] = "Trang chủ";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+    var listTuyenSinh = (IEnumerable<Entities.Entities.Category>)ViewData["ListTuyenSinh"];
+    var listDaoTao = (IEnumerable<Entities.Entities.Category>)ViewData["ListDaoTao"];
+    var i = 1;
+    var j = 1;
+}
+
+<div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;">
+    <div class="container py-5">
+        <div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
+            <h5 class="fw-bold text-primary text-uppercase">Bài viết tuyển sinh</h5>
+            <h1 class="mb-0">Những loại bài viết liên quan đến chủ đề tuyển sinh</h1>
+        </div>
+        <div class="row g-5">
+            @foreach (var item in listTuyenSinh)
+            {
+                
+                <div class="col-lg-4 wow slideInUp" data-wow-delay="0.3s" style="visibility: visible; animation-delay: 0.3s; animation-name: slideInUp;">
+                    <div class="blog-item bg-light rounded overflow-hidden">
+                        <div class="blog-img position-relative overflow-hidden">
+                            <img class="img-fluid" src="~/category/category-@(j).jpg" style="width: 100%" alt="">
+                        </div>
+                        <div class="p-4">
+                            <div class="d-flex mb-3">
+                            </div>
+                            <h4 class="mb-3">@item.Name</h4>
+                            <a class="text-uppercase" href="/Category/@item.ID" style="text-decoration: none">Xem chi tiết <i class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                j = j + 1;
+            }
+        </div>
+    </div>
+</div>
+<div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;">
+    <div class="container py-5">
+        <div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
+            <h5 class="fw-bold text-primary text-uppercase">Bài viết đào tạo</h5>
+            <h1 class="mb-0">Những loại bài viết liên quan đến chủ đề đào tạo</h1>
+        </div>
+        <div class="row g-5">
+            @foreach (var item in listDaoTao)
+            {
+                
+                <div class="col-lg-4 wow slideInUp" data-wow-delay="0.3s" style="visibility: visible; animation-delay: 0.3s; animation-name: slideInUp;">
+                    <div class="blog-item bg-light rounded overflow-hidden">
+                        <div class="blog-img position-relative overflow-hidden">
+                            <img class="img-fluid" src="~/category/category-@(i).jpg" style="width: 100%" alt="">
+                        </div>
+                        <div class="p-4">
+                            <div class="d-flex mb-3">
+                            </div>
+                            <h4 class="mb-3">@item.Name</h4>
+                            <a class="text-uppercase" href="/Category/@item.ID" style="text-decoration: none">Xem chi tiết <i class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                i = i + 1;
+            }
+        </div>
+    </div>
+</div>
+<div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;">
+    <div class="container py-5">
+        <div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
+            <h5 class="fw-bold text-primary text-uppercase">Bài viết mới nhất</h5>
+            <h1 class="mb-0">Những bài viết mới cập nhật gần đây</h1>
+        </div>
+        <div class="row g-5">
+            @foreach(var item in Model)
+            {
+                <div class="col-lg-4 wow slideInUp" data-wow-delay="0.3s" style="visibility: visible; animation-delay: 0.3s; animation-name: slideInUp;">
+                    <div class="blog-item bg-light rounded overflow-hidden">
+                        <div class="blog-img position-relative overflow-hidden">
+                            <img class="img-fluid" src="~/uploadFiles/@item.FileContent" style="width: 100%" alt="">
+                            <a class="position-absolute top-0 start-0 bg-primary text-white rounded-end mt-5 py-2 px-4" style="text-decoration: none" href="">Mới cập nhật</a>
+                        </div>
+                        <div class="p-4">
+                            <div class="d-flex mb-3">
+                                <small><i class="far fa-calendar-alt text-primary me-2"></i>@item.CreatedDate</small>
+                            </div>
+                            <h4 class="mb-3">@item.Name</h4>
+                            <a class="text-uppercase" href="/Product/@item.ID" style="text-decoration: none">Xem chi tiết <i class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

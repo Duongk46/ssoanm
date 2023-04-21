@@ -1,0 +1,76 @@
+﻿@model IEnumerable<Entities.Entities.Category>
+@{
+
+}
+<div class="container-fluid position-relative p-0">
+    <nav class="navbar navbar-expand-lg navbar-dark px-5 py-3 py-lg-0">
+        <a href="/" class="navbar-brand p-0">
+            <h1 class="m-0">
+                <img src="~/logo.png" style="width: auto;height: 60px;" />XHVNNB02
+            </h1>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="fa fa-bars"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto py-0">
+                @foreach (var item in Model)
+                {
+                    @if (item.IDParent == 0)
+                    {
+                        @if (Model.Where(x => x.IDParent == item.ID).Count() > 0)
+                        {
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">@item.Name</a>
+                                <div class="dropdown-menu m-0">
+                                    @foreach (var child in Model.Where(x => x.IDParent == item.ID))
+                                    {
+                                        <a href="/Category/@child.ID" class="dropdown-item">@child.Name</a>
+                                    }
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <a href="@item.Link" class="nav-item nav-link">@item.Name</a>
+                        }
+                    }
+                }
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <span><a href="/Logout" class="nav-item nav-link">Đăng xuất</a></span>
+                }
+                else
+                {
+                    <a href="/Login" class="nav-item nav-link">Đăng nhập</a>
+                }
+            </div>
+            <butaton type="button" class="btn text-primary ms-3" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fa fa-search"></i></butaton>
+        </div>
+    </nav>
+
+    <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 90px;">
+        <div class="row py-5">
+            <div class="col-12 pt-lg-5 mt-lg-5 text-center">
+                <h1 class="display-4 text-white animated zoomIn">@ViewBag.Title</h1>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Full Screen Search Start -->
+<div class="modal fade" id="searchModal" tabindex="-1">
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content" style="background: rgba(9, 30, 62, .7);">
+            <div class="modal-header border-0">
+                <button type="button" class="btn bg-white btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body d-flex align-items-center justify-content-center">
+                <div class="input-group" style="max-width: 600px;">
+                    <input type="text" class="form-control bg-transparent border-primary p-3" placeholder="Type search keyword">
+                    <button class="btn btn-primary px-4"><i class="bi bi-search"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Full Screen Search End -->

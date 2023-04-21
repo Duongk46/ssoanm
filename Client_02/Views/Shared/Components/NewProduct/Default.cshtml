@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Entities.Entities.Product>
+@{
+    var listCategory = (IEnumerable<Entities.Entities.Category>)ViewData["ListCategory"];
+}
+<!-- Category Start -->
+
+<div class="col-lg-4">
+    <div class="mb-5 wow slideInUp" data-wow-delay="0.1s">
+        <div class="section-title section-title-sm position-relative pb-3 mb-4">
+            <h3 class="mb-0">Loại bài viết</h3>
+        </div>
+        <div class="link-animated d-flex flex-column justify-content-start">
+            @foreach (var item in listCategory.Where(x => x.Status == true && x.IDParent != 0))
+            {
+                <a class="h5 fw-semi-bold bg-light rounded py-2 px-3 mb-2" style="text-decoration:none" href="/Category/@item.ID"><i class="bi bi-arrow-right me-2"></i>@item.Name</a>
+            }
+        </div>
+    </div>
+    <!-- Recent Post Start -->
+    <div class="mb-5 wow slideInUp" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: slideInUp;">
+        <div class="section-title section-title-sm position-relative pb-3 mb-4">
+            <h3 class="mb-0">Gần đây</h3>
+        </div>
+        @foreach (var item in Model)
+        {
+            <div class="d-flex rounded overflow-hidden mb-3">
+                <img class="img-fluid" src="/uploadFiles/@item.FileContent" style="width: 100px; object-fit: cover;" alt="">
+                <a href="/Product/@item.ID" class="h5 fw-semi-bold d-flex align-items-center bg-light px-3 mb-0" style="font-size: 16px;text-decoration:none">
+                    @item.Name
+                </a>
+            </div>
+        }
+    </div>
+</div>
+<!-- Sidebar End -->

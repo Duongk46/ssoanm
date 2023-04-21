@@ -1,0 +1,84 @@
+﻿@{
+    ViewData["Title"] = "Default";
+}
+
+
+<!-- Menu -->
+
+<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+    <div class="app-brand demo">
+        <a href="/Admin/Home" class="app-brand-link">
+            <span class="app-brand-logo demo">
+                <h1 class="m-0">XHVNNB01</h1>
+            </span>
+        </a>
+        <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+            <i class="bx bx-chevron-left bx-sm align-middle"></i>
+        </a>
+    </div>
+
+    <div class="menu-inner-shadow"></div>
+
+    <ul class="menu-inner py-1">
+        <!-- Cards -->
+
+        <li class="menu-header small text-uppercase">
+            <span class="menu-header-text">Table</span>
+        </li>
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                <div data-i18n="Category Settings">Menu</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a href="/Category" class="menu-link">
+                        <div data-i18n="Category Settings">Xem chi tiết</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="/Category/Create" class="menu-link">
+                        <div data-i18n="Create">Tạo dữ liệu</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                <div data-i18n="Product Settings">Bài viết</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a href="/Product" class="menu-link">
+                        <div data-i18n="Product Settings">Xem chi tiết</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="/Product/Create" class="menu-link">
+                        <div data-i18n="Create">Tạo dữ liệu</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <li class="menu-item">
+                <a href="/logout" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                    <div>Đăng xuất</div>
+                </a>
+            </li>
+        }
+        else
+        {
+            <li class="menu-item">
+                <a href="/login" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                    <div>Đăng nhập</div>
+                </a>
+            </li>
+        }
+    </ul>
+</aside>
+<!-- / Menu -->
